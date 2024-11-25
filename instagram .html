@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع بيع اشتراكات برامج التسويق</title>
+    <meta name="description" content="أفضل موقع لبيع اشتراكات برامج التسويق مثل WA Sender، PlanMaster، وNijigram. اختر البرنامج المناسب لاحتياجاتك الآن.">
+    <meta name="keywords" content="تسويق, برامج تسويق, إدارة الحملات, WhatsApp Marketing, تحليل البيانات, التواصل الاجتماعي">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* إعدادات الخطوط والخلفية */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            animation: gradientBackground 8s ease-in-out infinite;
+            color: #fff;
+        }
+
+        /* تأثير الخلفية المتحركة */
+        @keyframes gradientBackground {
+            0% { background: linear-gradient(135deg, #4e54c8, #8f94fb); }
+            50% { background: linear-gradient(135deg, #8f94fb, #4e54c8); }
+            100% { background: linear-gradient(135deg, #4e54c8, #8f94fb); }
+        }
+
+        /* شريط التنقل */
+        nav {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: color 0.3s ease-in-out;
+        }
+
+        nav ul li a:hover {
+            color: #ffaf7b;
+        }
+
+        /* إعدادات الهيدر */
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            color: #ffcc33;
+            animation: slideInHeader 2s ease-in-out;
+        }
+
+        @keyframes slideInHeader {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        header p {
+            font-size: 1.5rem;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* إعدادات البطاقة */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 40px;
+            gap: 30px;
+        }
+
+        .card {
+            width: 350px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+        }
+
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #ffaf7b;
+        }
+
+        .card ul {
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .card ul li {
+            margin: 10px 0;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .card ul li::before {
+            content: "✔";
+            color: #ffaf7b;
+            margin-right: 10px;
+            position: absolute;
+            left: -20px;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        button {
+            background-color: #ffaf7b;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background-color: #d76d77;
+            transition: all 0.4s;
+            border-radius: 50%;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+        }
+
+        button:hover::before {
+            width: 0;
+            height: 0;
+        }
+
+        button:hover {
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            font-size: 0.9rem;
+        }
+
+        .contact-form {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+
+        .contact-form input, .contact-form textarea {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .contact-form button {
+            background-color: #ffcc33;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+		/* صفحة الترحيب */
+        .welcome-section {
+            text-align: center;
+            padding: 100px 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .welcome-section h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            color: #ffcc33;
+        }
+
+        .welcome-section p {
+            font-size: 1.5rem;
+            margin: 20px 0;
+            color: #fff;
+        }
+
+        .welcome-section button {
+            background-color: #ffaf7b;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .welcome-section button:hover {
+            background-color: #d76d77;
+        }
+
+        /* الصفحة الرئيسية */
+        .main-page {
+            display: none;
+            opacity: 0;
+        }
+
+        .main-page.visible {
+            display: block;
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+
+        nav {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: color 0.3s ease-in-out;
+        }
+
+        nav ul li a:hover {
+            color: #ffaf7b;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            color: #ffcc33;
+        }
+
+        header p {
+            font-size: 1.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- صفحة الترحيب -->
+    <section class="welcome-section" id="welcome-section">
+        <h1>مرحباً بك في موقعنا!</h1>
+        <p>نحن هنا لمساعدتك في تنمية أعمالك التسويقية بأفضل الأدوات المتاحة.</p>
+        <button id="continue-button">استمرار</button>
+    </section>
+    <nav>
+        <ul>
+            <li><a href="#home">الصفحة الرئيسية</a></li>
+            <li><a href="#services">البرامج</a></li>
+            <li><a href="#contact">اتصل بنا</a></li>
+        </ul>
+    </nav>
+    <header>
+        <h1>اشترك الآن في برامج التسويق</h1>
+        <p>أفضل خطط وبرامج لمساعدتك في تنمية أعمالك التسويقية</p>
+    </header>
+    <section class="container" id="services">
+        <div class="card">
+            <h2>WA Sender</h2>
+            <p>أداة متقدمة لإرسال رسائل تلقائية عبر WhatsApp.</p>
+            <ul>
+                <li>إرسال رسائل جماعية بسهولة.</li>
+                <li>تخصيص الرسائل للمستلمين.</li>
+                <li>إرسال رسائل لأرقام غير محفوظة.</li>
+                <li>تقارير تفصيلية للحملات.</li>
+            </ul>
+            <button><span>اشترك الآن</span></button>
+        </div>
+        <div class="card">
+            <h2>PlanMaster</h2>
+            <p>أداة لتخطيط الحملات التسويقية.</p>
+            <ul>
+                <li>خطط مخصصة للحملات.</li>
+                <li>تتبع الأداء عبر التقارير.</li>
+                <li>تحليل استراتيجيات التسويق.</li>
+            </ul>
+            <button><span>اشترك الآن</span></button>
+        </div>
+        <div class="card">
+            <h2>Nijigram</h2>
+            <p>إدارة وتحليل حسابات التواصل الاجتماعي.</p>
+            <ul>
+                <li>إدارة حسابات Instagram و Facebook.</li>
+                <li>تحليل أداء المنشورات.</li>
+                <li>جدولة المنشورات.</li>
+                <li>تقارير نمو الحساب.</li>
+            </ul>
+            <button><span>اشترك الآن</span></button>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <h3>اتصل بنا</h3>
+        <p>للاستفسارات أو المساعدة، تواصل معنا.</p>
+        <form class="contact-form" id="contact-form">
+            <input type="text" name="name" placeholder="اسمك" required>
+            <input type="email" name="email" placeholder="البريد الإلكتروني" required>
+            <textarea name="message" rows="5" placeholder="رسالتك" required></textarea>
+            <button type="submit">إرسال</button>
+        </form>
+    </footer>
+
+    <script>
+	// تعريف عناصر الصفحات
+        const welcomeSection = document.getElementById('welcome-section');
+        const mainPage = document.getElementById('main-page');
+        const continueButton = document.getElementById('continue-button');
+
+        // عند الضغط على زر استمرار
+        continueButton.addEventListener('click', () => {
+            // إخفاء صفحة الترحيب
+            welcomeSection.style.display = 'none';
+
+            // إظهار الصفحة الرئيسية
+            mainPage.classList.add('visible');
+        });
+        // تفعيل EmailJS
+        emailjs.init('zUzoColwUrIR5zOPz');
+
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            emailjs.sendForm('service_t10k2gg', 'template_u89riam', this)
+                .then(function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'تم الإرسال بنجاح!',
+                        text: 'شكراً لتواصلك معنا. سنرد عليك قريباً.'
+                    });
+                }, function(error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'خطأ!',
+                        text: 'حدث خطأ أثناء إرسال الرسالة. حاول مرة أخرى.'
+                    });
+                });
+        });
+
+        // ظهور البطاقات عند التمرير
+        const cards = document.querySelectorAll('.card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => observer.observe(card));
+    </script>
+</body>
+</html>
